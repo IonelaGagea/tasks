@@ -13,13 +13,13 @@ import static java.util.Objects.isNull;
 public class LinkedTaskList  extends TaskList {
     private static final Logger log = Logger.getLogger(LinkedTaskList.class.getName());
     private class LinkedTaskListIterator implements Iterator<Task>{
-        private int cursor;
+        private int current;
         private int lastCalled = -1;
 
 
         @Override
         public boolean hasNext() {
-            return cursor < numberOfTasks;
+            return current < numberOfTasks;
         }
 
         @Override
@@ -28,8 +28,8 @@ public class LinkedTaskList  extends TaskList {
                 log.error("next iterator element doesn't exist");
                 throw new NoSuchElementException("No next element");
             }
-            lastCalled = cursor;
-            return getTask(cursor++);
+            lastCalled = current;
+            return getTask(current++);
         }
 
         @Override
@@ -38,7 +38,7 @@ public class LinkedTaskList  extends TaskList {
                 throw new IllegalStateException();
             }
             LinkedTaskList.this.remove(getTask(lastCalled));
-            cursor = lastCalled;
+            current = lastCalled;
             lastCalled = -1;
         }
     }
