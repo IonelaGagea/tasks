@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class MainTasksController {
     private static final Logger log = Logger.getLogger(MainTasksController.class.getName());
@@ -128,7 +129,7 @@ public class MainTasksController {
         }
     }
     @FXML
-    public void showFilteredTasks(){
+    public void showFilteredTasks() throws Exception {
         Date start = getDateFromFilterField(datePickerFrom.getValue(), fieldTimeFrom.getText());
         Date end = getDateFromFilterField(datePickerTo.getValue(), fieldTimeTo.getText());
 
@@ -138,7 +139,10 @@ public class MainTasksController {
         tasks.setItems(observableTasks);
         updateCountLabel(observableTasks);
     }
-    private Date getDateFromFilterField(LocalDate localDate, String time){
+    private Date getDateFromFilterField(LocalDate localDate, String time) throws Exception {
+        if(localDate == null || Objects.equals(time, "")){
+            throw new Exception("Invalid Data");
+        }
         Date date = dateService.getDateValueFromLocalDate(localDate);
         return dateService.getDateMergedWithTime(time, date);
     }

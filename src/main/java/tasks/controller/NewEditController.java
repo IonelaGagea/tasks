@@ -131,7 +131,6 @@ public class NewEditController {
         }
     }
     private void hideRepeatedTaskModule(boolean toShow){
-        datePickerEnd.setDisable(toShow);
         fieldInterval.setDisable(toShow);
         txtFieldTimeEnd.setDisable(toShow);
 
