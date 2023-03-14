@@ -59,9 +59,9 @@ public class Notificator extends Thread {
     }
     public static void showNotification(Task task){
         log.info("push notification showing");
-        Platform.runLater(() -> {
-            Notifications.create().title("Task reminder").text("It's time for " + task.getTitle()).showInformation();
-        });
+        Platform.runLater(() ->
+            Notifications.create().title("Task reminder").text("It's time for " + task.getTitle()).showInformation()
+        );
     }
     private static long getTimeInMinutes(Date date){
         return date.getTime()/millisecondsInSec/secondsInMin;
