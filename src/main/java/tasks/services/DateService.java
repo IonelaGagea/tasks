@@ -29,6 +29,8 @@ public class DateService {
     }
 
     public Date getDateMergedWithTime(String time, Date noTimeDate) throws Exception {//to retrieve Date object from both DatePicker and time field
+        if(noTimeDate == null) throw new IllegalArgumentException("Invalid Date.");
+
         String[] units = time.split(":");
 
         if (units.length != 2)
