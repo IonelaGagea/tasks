@@ -162,7 +162,7 @@ public class NewEditController {
         try {
             result = makeTask();
         }
-        catch (RuntimeException e){
+        catch (Exception e){
             incorrectInputMade = true;
             try {
                 Stage stage = new Stage();
@@ -179,7 +179,7 @@ public class NewEditController {
         return result;
     }
 
-    private Task makeTask(){
+    private Task makeTask() throws Exception {
         Task result;
         String newTitle = fieldTitle.getText();
         Date startDateWithNoTime = dateService.getDateValueFromLocalDate(datePickerStart.getValue());//ONLY date!!without time
