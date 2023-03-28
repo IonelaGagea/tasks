@@ -14,36 +14,47 @@ public class DateService {
 
     private TasksService service;
 
-    public DateService(TasksService service){
-        this.service=service;
+    public DateService(TasksService service) {
+        this.service = service;
     }
-    public static LocalDate getLocalDateValueFromDate(Date date){//for setting to DatePicker - requires LocalDate
+
+    public static LocalDate getLocalDateValueFromDate(Date date) {//for setting to DatePicker - requires LocalDate
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
     }
-    public Date getDateValueFromLocalDate(LocalDate localDate){//for getting from DatePicker
+
+    public Date getDateValueFromLocalDate(LocalDate localDate) {//for getting from DatePicker
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         return Date.from(instant);
     }
+
     public Date getDateMergedWithTime(String time, Date noTimeDate) throws Exception {//to retrieve Date object from both DatePicker and time field
         String[] units = time.split(":");
-        if(units.length != 2)
+
+        if (units.length != 2)
             throw new Exception("Invalid time format.");
+
+        int hour, minute;
+
         try {
-            int hour = Integer.parseInt(units[0]);
-            int minute = Integer.parseInt(units[1]);
-            if (hour > HOURS_IN_A_DAY || minute > MINUTES_IN_HOUR) throw new IllegalArgumentException("time unit exceeds bounds");
-            Calendar calendar = GregorianCalendar.getInstance();
-            calendar.setTime(noTimeDate);
-            calendar.set(Calendar.HOUR_OF_DAY, hour);
-            calendar.set(Calendar.MINUTE, minute);
-            return calendar.getTime();
-        }catch (Exception ex){
-            throw new Exception("Invalid hour or minutes");
+            hour = Integer.parseInt(units[0]);
+            minute = Integer.parseInt(units[1]);
+        } catch (Exception ex) {
+            throw new Exception("Invalid values for hh or mm.");
         }
 
+
+        if (hour > HOURS_IN_A_DAY || minute > MINUTES_IN_HOUR)
+            throw new IllegalArgumentException("time unit exceeds bounds");
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(noTimeDate);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        return calendar.getTime();
+
     }
-        public String getTimeOfTheDayFromDate(Date date){//to set in detached time field
+
+    public String getTimeOfTheDayFromDate(Date date) {//to set in detached time field
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(date);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
