@@ -103,6 +103,7 @@ class TaskTest {
     @Test
     void F02_TC09() {
         Date testDate = start;
+
         Date result = mockRepetitiveActiveTask.nextTimeAfter(testDate);
 
         assertEquals(start.getTime() + 3 * 1000, result.getTime());
