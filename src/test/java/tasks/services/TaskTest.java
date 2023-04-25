@@ -2,6 +2,7 @@ package tasks.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -11,9 +12,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TaskTest {
+class TaskTest {
     private SimpleDateFormat dateFormat;
     private Task mockActiveTask;
+    private Task mockTask;
     private Task mockRepetitiveActiveTask;
     private Date start;
     private Date end;
@@ -24,8 +26,6 @@ public class TaskTest {
         dateFormat = new SimpleDateFormat(pattern);
         end = dateFormat.parse("24/03/2023");
         start = dateFormat.parse("21/03/2023");
-        start.setTime(600);
-        end.setTime(3800);
 
         int interval = 3;
 
@@ -36,10 +36,13 @@ public class TaskTest {
         mockRepetitiveActiveTask.setTime(start, end, 3);
         mockRepetitiveActiveTask.setActive(true);
 
+        mockTask = new Task("test", start, end, interval);
+        mockTask.setActive(false);
+
     }
 
     @Test
-    public void F02_TC01() throws ParseException {
+    void F02_TC01() throws ParseException {
         Date testDate = dateFormat.parse("24/03/2023");
 
         Date result = mockActiveTask.nextTimeAfter(testDate);
@@ -48,26 +51,27 @@ public class TaskTest {
     }
 
     @Test
-    public void F02_TC02() throws ParseException {
-        Date testDate = dateFormat.parse("22/03/2023");
+    void F02_TC02() throws ParseException {
+        Date testDate = dateFormat.parse("20/03/2023");
 
-        Date result = mockRepetitiveActiveTask.nextTimeAfter(testDate);
+        Date result = mockTask.nextTimeAfter(testDate);
 
         assertNull(result);
     }
 
     @Test
-    public void F02_TC03() throws ParseException {
-        Date testDate = dateFormat.parse("22/03/2023");
-        testDate.setTime(400);
+    void F02_TC03() throws ParseException {
+        mockTask.setActive(true);
+        mockTask.setTime(start, end, 0);
+        Date testDate = dateFormat.parse("20/03/2023");
 
-        Date result = mockActiveTask.nextTimeAfter(testDate);
+        Date result = mockTask.nextTimeAfter(testDate);
 
-        assertEquals(600, result.getTime());
+        assertEquals(start, result);
     }
 
     @Test
-    public void F02_TC04() throws ParseException {
+    void F02_TC04() throws ParseException {
         Date testDate = dateFormat.parse("22/03/2023");
         testDate.setTime(400);
 
@@ -77,46 +81,39 @@ public class TaskTest {
     }
 
     @Test
-    public void F02_TC05() {
-        Date testDate = start;
-        testDate.setTime(500);
+    void F02_TC05() throws ParseException {
+        Date testDate = dateFormat.parse("20/03/2023");
 
         Date result = mockRepetitiveActiveTask.nextTimeAfter(testDate);
 
         assertNull(result);
     }
 
-    @Test // nu ar trebui sa mearga aici. e fentat
-    public void F02_TC06() throws ParseException {
-        Date testDate = dateFormat.parse("23/03/2023");
-        testDate.setTime(500);
+    @Test
+    void F02_TC06() throws ParseException {
+        mockActiveTask.setTime(start, end, 0);
+        Date testDate = dateFormat.parse("20/03/2023");
 
-        Date result = mockRepetitiveActiveTask.nextTimeAfter(testDate);
+        Date result = mockActiveTask.nextTimeAfter(testDate);
 
-        assertEquals(result.getTime(), 600);
+        assertEquals(start, result);
     }
 
-    @Test
-    public void F02_TC07(){
-       // 6 7 8 de vazut. 11 inclus in 10 (sper ca e ok)
-    }
 
     @Test
-    public void F02_TC09(){
+    void F02_TC09() {
         Date testDate = start;
-
         Date result = mockRepetitiveActiveTask.nextTimeAfter(testDate);
 
-        assertEquals(result.getTime(), 3600);
+        assertEquals(start.getTime() + 3 * 1000, result.getTime());
     }
 
     @Test
-    public void F02_TC10() throws ParseException {
+    void F02_TC10() throws ParseException {
         Date testDate = dateFormat.parse("23/03/2023");
-        testDate.setTime(700);
 
         Date result = mockRepetitiveActiveTask.nextTimeAfter(testDate);
 
-        assertEquals(result.getTime(), 600);
+        assertEquals(testDate.getTime() + 3 * 1000, result.getTime());
     }
 }
