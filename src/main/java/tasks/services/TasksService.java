@@ -3,6 +3,7 @@ package tasks.services;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tasks.model.ArrayTaskList;
+import tasks.model.LinkedTaskList;
 import tasks.model.Task;
 import tasks.model.TasksOperations;
 
@@ -10,9 +11,9 @@ import java.util.Date;
 
 public class TasksService {
 
-    private ArrayTaskList tasks;
+    private LinkedTaskList tasks;
 
-    public TasksService(ArrayTaskList tasks){
+    public TasksService(LinkedTaskList tasks){
         this.tasks = tasks;
     }
 
@@ -20,6 +21,9 @@ public class TasksService {
         return FXCollections.observableArrayList(tasks.getAll());
     }
 
+    public void addTask(Task task){
+        this.tasks.add(task);
+    }
     public String getIntervalInHours(Task task){
         int seconds = task.getRepeatInterval();
         int minutes = seconds / DateService.SECONDS_IN_MINUTE;

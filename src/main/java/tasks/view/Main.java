@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import tasks.controller.MainTasksController;
 import tasks.controller.Notificator;
 import tasks.model.ArrayTaskList;
+import tasks.model.LinkedTaskList;
 import tasks.services.TaskIO;
 import tasks.services.TasksService;
 
@@ -23,7 +24,7 @@ public class Main extends Application {
 
     private static final Logger log = Logger.getLogger(Main.class.getName());
 
-    private ArrayTaskList savedTasksList = new ArrayTaskList();
+    private LinkedTaskList savedTasksList = new LinkedTaskList();
 
     private static ClassLoader classLoader = Main.class.getClassLoader();
     public static File savedTasksFile = new File("data/tasks.txt");

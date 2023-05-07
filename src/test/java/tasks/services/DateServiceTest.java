@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import tasks.model.ArrayTaskList;
+import tasks.model.LinkedTaskList;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,8 +23,8 @@ class DateServiceTest {
 
     @BeforeEach
     void setUp() {
-        ArrayTaskList arrayTaskList = new ArrayTaskList();
-        TasksService tasksService = new TasksService(arrayTaskList);
+        LinkedTaskList taskList = new LinkedTaskList();
+        TasksService tasksService = new TasksService(taskList);
         this.dateService = new DateService(tasksService);
     }
 

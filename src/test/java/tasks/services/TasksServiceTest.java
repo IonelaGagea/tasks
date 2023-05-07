@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import tasks.model.ArrayTaskList;
+import tasks.model.LinkedTaskList;
 import tasks.model.Task;
 
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ class TasksServiceTest {
 
     @BeforeEach
     void setUp() {
-        service = new TasksService(new ArrayTaskList());
+        service = new TasksService(new LinkedTaskList());
 
     }
 
