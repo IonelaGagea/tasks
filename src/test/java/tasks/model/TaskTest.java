@@ -1,6 +1,7 @@
 package tasks.model;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Tag("TaskTest")
 class TaskTest {
     private SimpleDateFormat dateFormat;
     private Task mockActiveTask;
