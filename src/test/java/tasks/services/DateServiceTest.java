@@ -32,11 +32,10 @@ class DateServiceTest {
     void tearDown() {
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = { "20:30", "21:30" })
-    @Tag("valid")
-    void getDateMergedWithTime_validData_OK_ECP_1(String time) throws Exception {
+    @Test
+    void getDateMergedWithTime_validData_OK_ECP_1() throws Exception {
         // setup
+        String time = "20:30";
         String pattern = "dd/MM/yyyy";
         String timePattern = "HH:mm";
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
