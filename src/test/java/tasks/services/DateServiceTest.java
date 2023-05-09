@@ -72,7 +72,7 @@ class DateServiceTest {
 
     }
 
-    @Tag("invalid")
+
     @Test
     void getDateMergedWithTime_InvalidTime_Exception_ECP_1() {
         Exception exception = assertThrows(Exception.class, () -> {
