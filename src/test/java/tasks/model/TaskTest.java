@@ -1,5 +1,6 @@
 package tasks.model;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Tag("TaskTest")
+
 class TaskTest {
     private SimpleDateFormat dateFormat;
     private Task mockActiveTask;
@@ -40,6 +41,10 @@ class TaskTest {
 
         mockTask = new Task("test", start, end, interval);
         mockTask.setActive(false);
+
+    }
+    @AfterEach
+    void tearDown(){
 
     }
 
